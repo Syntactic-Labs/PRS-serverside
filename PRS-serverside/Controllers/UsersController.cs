@@ -41,6 +41,21 @@ namespace PRS_serverside.Controllers
             return user;
         }
 
+        //Put: api/users/Username/Password
+        //To require username and password for login/ also return Not Found if user does not exsist
+        [HttpGet("{username}/{password}")]
+        public async Task<ActionResult<User>> Login(string username, string password)
+        {
+            var usename = await _context.Users
+                                            .SingleOrDefaultAsync(x => x.Username == username);
+            if (username == null)
+            {
+                NotFound();
+            }
+            return usename;
+
+        }
+
         // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
