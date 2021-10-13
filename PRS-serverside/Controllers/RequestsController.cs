@@ -41,6 +41,23 @@ namespace PRS_serverside.Controllers
             return request;
         }
 
+        //Get: api/reviews/{userId}
+        //Reads requests for all that have the status "Review" but omitts the users
+        [HttpGet("reviews,{userId}")]
+        public async Task<ActionResult<IEnumerable<Request>>> GetRequestsInReview(int userId)
+        {
+            
+            
+
+            var reqs = await (from r in _context.Requests
+                            where r.UserId != userId && r.Status == "Review"
+                            select r).ToListAsync();
+            return Ok(reqs);
+
+
+            
+        }
+
         // PUT: api/Requests/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

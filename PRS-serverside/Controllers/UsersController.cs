@@ -41,7 +41,7 @@ namespace PRS_serverside.Controllers
             return user;
         }
 
-        //Put: api/users/Username/Password
+        //Put: api/users/{Username}/{Password}
         //To require username and password for login/ also return Not Found if user does not exsist
         [HttpGet("{username}/{password}")]
         public async Task<ActionResult<User>> Login(string username, string password)
