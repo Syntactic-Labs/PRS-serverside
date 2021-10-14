@@ -43,19 +43,52 @@ namespace PRS_serverside.Controllers
 
         //Get: api/Requests/reviews/{userId}
         //Reads requests for all that have the status "Review" but omitts the users
-        [HttpGet("reviews,{userId}")]
+        [HttpGet("reviews/{userId}")]
         public async Task<ActionResult<IEnumerable<Request>>> GetRequestsInReview(int userId)
         {
-            var R = await (from r in _context.Requests
-                            where r.UserId != userId && r.Status == "Review"
-                            select r).ToListAsync();
-            return Ok(R); 
+            return await (from r in _context.Requests
+                          where r.UserId != userId && r.Status == "Review"
+                          select r).ToListAsync();
+
         }
 
-        //PUT: api/requests/review
+        //PUT: api/requests/review/Id
         //Requests status to Review
-        [HttpPut("review")]
-        public async Task<IActionResult> SetRequestToReview(Request request) { }
+        [HttpPut("review/{id}")]
+        public async Task<IActionResult> SetRequestToReview(int id, Request request)
+        {
+            if (request.Total <= 50)
+            {
+                request.Status = "Approved";
+            }
+            else
+            {
+                request.Status = "Review";
+            }
+            await _context.SaveChangesAsync();
+            return Ok();
+            
+        }
+
+        //PUT: api/request/approve
+        //Allows reviewer to set status to approved
+        [HttpPut("approve")]
+        public async Task<IActionResult> SetRequestToApproved(Request request)
+        {
+            request.Status = "Approved";
+            return await PutRequest(request.Id, request);
+        }
+        
+        //PUT:api/requests/reject
+        //Allows reviewer to set status to Rejected
+        public async Task<IActionResult> SetRequestToRejected(Request request)
+        {
+            request.Status = "Rejected";
+            await _context.SaveChangesAsync();
+            return Ok();
+
+        }
+        
 
         // PUT: api/Requests/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
