@@ -22,7 +22,17 @@ namespace PRS_serverside.Controllers
         //Used to Total Request Lines
         public async Task<IActionResult> RecalculateRequestTotal(int requestId)
         {
-
+            var req = await _context.Requests.FindAsync(requestId);
+            req.Total = (from rl in _context.RequestLines
+                         join p in _context.Products
+                         on rl.ProductId equals p.Id
+                         where rl.RequestId == requestId
+                         select new
+                         {
+                             LineTotal = rl.Quantity * p.Price
+                         }).Sum(x => x.LineTotal);
+            await _context.SaveChangesAsync();
+            return Ok();
         }
 
         // GET: api/RequestLines
