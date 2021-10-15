@@ -9,12 +9,6 @@ using PRS_serverside.Models;
 
 namespace PRS_serverside.Controllers
 {
-
-    ////Calculate Total
-    //public async Task<IActionResult> RecalculateRequest(int requestId)
-    //{
-    //    var request = await _context.
-    //}
     [Route("api/[controller]")]
     [ApiController]
     public class RequestLinesController : ControllerBase

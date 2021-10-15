@@ -41,52 +41,40 @@ namespace PRS_serverside.Controllers
             return request;
         }
 
-        //Get: api/Requests/reviews/{userId}
-        //Reads requests for all that have the status "Review" but omitts the users
+        //Get: api/requests/reviews/{userId}//Reads requests having status="Review" but omitts the users
         [HttpGet("reviews/{userId}")]
         public async Task<ActionResult<IEnumerable<Request>>> GetRequestsInReview(int userId)
         {
             return await (from r in _context.Requests
                           where r.UserId != userId && r.Status == "Review"
                           select r).ToListAsync();
-
         }
 
-        //PUT: api/requests/review/Id
-        //Requests status to Review
-        [HttpPut("review/{id}")]
-        public async Task<IActionResult> SetRequestToReview(int id, Request request)
+        //PUT: api/requests/review//Requests status to Review
+        [HttpPut("review")]
+        public async Task<IActionResult> SetRequestToReview(Request request)
         {
-            if (request.Total <= 50)
-            {
-                request.Status = "Approved";
-            }
-            else
-            {
-                request.Status = "Review";
-            }
-            await _context.SaveChangesAsync();
-            return Ok();
-            
+            request.Status = request.Total <= 50 ?  "Approved" : "Review";
+            //_context.Entry(request).State = EntityState.Modified;  Used to alter data with PUT
+            //await _context.SaveChangesAsync();
+            //return Ok();
+            return await PutRequest(request.Id, request);
         }
 
-        //PUT: api/request/approve
-        //Allows reviewer to set status to approved
+        //PUT: api/requests/approve//Allows reviewer to set status to approved
         [HttpPut("approve")]
         public async Task<IActionResult> SetRequestToApproved(Request request)
         {
             request.Status = "Approved";
             return await PutRequest(request.Id, request);
         }
-        
-        //PUT:api/requests/reject
-        //Allows reviewer to set status to Rejected
+
+        //PUT:api/requests/reject//Allows reviewer to set status to Rejected
+        [HttpPut("reject")]
         public async Task<IActionResult> SetRequestToRejected(Request request)
         {
             request.Status = "Rejected";
-            await _context.SaveChangesAsync();
-            return Ok();
-
+            return await PutRequest(request.Id, request);
         }
         
 
