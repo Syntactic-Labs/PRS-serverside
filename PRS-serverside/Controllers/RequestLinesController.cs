@@ -20,7 +20,7 @@ namespace PRS_serverside.Controllers
             _context = context;
         }
         //Used to Total Request Lines
-        public async Task<IActionResult> RecalculateRequestTotal(int requestId)
+        private async Task<IActionResult> RecalculateRequestTotal(int requestId)
         {
             var req = await _context.Requests.FindAsync(requestId);
             req.Total = (from rl in _context.RequestLines
@@ -71,6 +71,7 @@ namespace PRS_serverside.Controllers
             try
             {
                 await _context.SaveChangesAsync();
+                await RecalculateRequestTotal(requestLine.RequestId);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -94,6 +95,7 @@ namespace PRS_serverside.Controllers
         {
             _context.RequestLines.Add(requestLine);
             await _context.SaveChangesAsync();
+            await RecalculateRequestTotal(requestLine.RequestId);
 
             return CreatedAtAction("GetRequestLine", new { id = requestLine.Id }, requestLine);
         }
@@ -110,6 +112,7 @@ namespace PRS_serverside.Controllers
 
             _context.RequestLines.Remove(requestLine);
             await _context.SaveChangesAsync();
+            await RecalculateRequestTotal(requestLine.RequestId);
 
             return NoContent();
         }
