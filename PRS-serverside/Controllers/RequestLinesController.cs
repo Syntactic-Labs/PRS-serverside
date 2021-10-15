@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using PRS_serverside.Models;
 
 namespace PRS_serverside.Controllers
-{
+{    
     [Route("api/[controller]")]
     [ApiController]
     public class RequestLinesController : ControllerBase
@@ -18,6 +18,11 @@ namespace PRS_serverside.Controllers
         public RequestLinesController(PrsDbContext context)
         {
             _context = context;
+        }
+        //Used to Total Request Lines
+        public async Task<IActionResult> RecalculateRequestTotal(int requestId)
+        {
+
         }
 
         // GET: api/RequestLines
