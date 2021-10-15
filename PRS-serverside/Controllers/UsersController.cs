@@ -52,7 +52,7 @@ namespace PRS_serverside.Controllers
             {
                 NotFound();
             }
-            if (uname.Password != password)
+            if (uname.Username != username || uname.Password != password)
             {
                 return BadRequest();
             }
