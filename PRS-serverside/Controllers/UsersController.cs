@@ -46,8 +46,7 @@ namespace PRS_serverside.Controllers
         [HttpGet("{username}/{password}")]
         public async Task<ActionResult<User>> Login(string username, string password)
         {
-            var uname = await _context.Users
-                                            .SingleOrDefaultAsync(x => x.Username == username);
+            var uname = await _context.Users.SingleOrDefaultAsync(x => x.Username == username);
             if (username == null)
             {
                 NotFound();
