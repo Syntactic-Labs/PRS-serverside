@@ -41,7 +41,7 @@ namespace PRS_serverside.Controllers
             return request;
         }
 
-        //Get: api/requests/reviews/{userId}//Reads requests having status="Review" but omitts the users
+        //Get: api/requests/reviews/{userId}    //Reads requests having status="Review" but omitts the users
         [HttpGet("reviews/{userId}")]
         public async Task<ActionResult<IEnumerable<Request>>> GetRequestsInReview(int userId)
         {
@@ -50,7 +50,7 @@ namespace PRS_serverside.Controllers
                           select r).ToListAsync();
         }
 
-        //PUT: api/requests/review//Requests status to Review
+        //PUT: api/requests/review    //Requests status to Review
         [HttpPut("review")]
         public async Task<IActionResult> SetRequestToReview(Request request)
         {
@@ -61,7 +61,7 @@ namespace PRS_serverside.Controllers
             return await PutRequest(request.Id, request);
         }
 
-        //PUT: api/requests/approve//Allows reviewer to set status to approved
+        //PUT: api/requests/approve    //Allows reviewer to set status to approved
         [HttpPut("approve")]
         public async Task<IActionResult> SetRequestToApproved(Request request)
         {
@@ -69,7 +69,7 @@ namespace PRS_serverside.Controllers
             return await PutRequest(request.Id, request);
         }
 
-        //PUT:api/requests/reject//Allows reviewer to set status to Rejected
+        //PUT:api/requests/reject    //Allows reviewer to set status to Rejected
         [HttpPut("reject")]
         public async Task<IActionResult> SetRequestToRejected(Request request)
         {
