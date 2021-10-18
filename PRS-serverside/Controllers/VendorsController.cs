@@ -41,8 +41,10 @@ namespace PRS_serverside.Controllers
             return vendor;
         }
 
-        //: api Vendors/5/PO
-        //Pulls Appoved Product, Quantity, Price, and Total for Specified Vendor
+        //////////////////: api Vendors/5/PO
+        //////////////////Pulls Appoved Product, Quantity, Price, and Total for Specified Vendor
+        ////////////////[HttpGet("{id}/PO")]
+        ////////////////public async Task
         
 
         // PUT: api/Vendors/5
