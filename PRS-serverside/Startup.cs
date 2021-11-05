@@ -29,9 +29,15 @@ namespace PRS_serverside
 
             services.AddControllers();
 
+
+            var connStrKey = "PrsDbContextCloud";
+#if DEBUG
+            connStrKey = "PrsDbContext";
+#endif
+
             services.AddDbContext<PrsDbContext>(s =>
             {
-                s.UseSqlServer(Configuration.GetConnectionString("PrsDbContext"));
+                s.UseSqlServer(Configuration.GetConnectionString(connStrKey));
             });
 
             services.AddCors();
@@ -55,6 +61,11 @@ namespace PRS_serverside
             {
                 endpoints.MapControllers();
             });
+
+            using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                scope.ServiceProvider.GetService<PrsDbContext>().Database.Migrate();
+            }
         }
     }
 }

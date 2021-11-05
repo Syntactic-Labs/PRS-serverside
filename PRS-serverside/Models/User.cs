@@ -9,7 +9,7 @@ namespace PRS_serverside.Models
     public class User
     {
         public int Id { get; set; }
-        [StringLength(30), Required()]
+        [StringLength(30), Required]
         public string Username { get; set; }
         [StringLength(30), Required]
         public string Password { get; set; }
