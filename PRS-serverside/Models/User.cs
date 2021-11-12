@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace PRS_serverside.Models
@@ -25,5 +26,9 @@ namespace PRS_serverside.Models
         public bool IsReviewer { get; set; }
         [Required]
         public bool IsAdmin { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Request> Requests { get; set; }
+
+        public User() { }
     }
 }

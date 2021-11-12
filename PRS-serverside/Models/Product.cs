@@ -24,9 +24,7 @@ namespace PRS_serverside.Models
         [StringLength(255)]
         public string PhotoPath { get; set; }
         public int VendorId { get; set; }
-        
         public virtual Vendor Vendor { get; set; }
-        [JsonIgnore]
         public virtual ICollection<RequestLine> RequestLines { get; set; }
         public Product() { }
     }

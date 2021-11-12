@@ -19,5 +19,6 @@ namespace PRS_serverside.Models
         public virtual Product Product { get; set; }
         [JsonIgnore]
         public virtual Request Request { get; set; }
+        public RequestLine() { }
     }
 }

@@ -28,7 +28,7 @@ namespace PRS_serverside.Models
 
         public virtual User User { get; set; }
         public virtual IEnumerable<RequestLine> RequestLines { get; set; }
-
+        public Request() { }
 
 
     }

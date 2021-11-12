@@ -46,6 +46,7 @@ namespace PRS_serverside.Controllers
         public async Task<ActionResult<IEnumerable<Request>>> GetRequestsInReview(int userId)
         {
             return await (from r in _context.Requests
+                          .Include(r => r.User)
                           where r.UserId != userId && r.Status == "Review"
                           select r).ToListAsync();
         }
