@@ -28,7 +28,7 @@ namespace PRS_serverside.Models
         public string Email { get; set; }
 
         public Vendor() { }
-       
+        [JsonIgnore]
         public virtual ICollection<Product> Products { get; set; }
     }
 }
