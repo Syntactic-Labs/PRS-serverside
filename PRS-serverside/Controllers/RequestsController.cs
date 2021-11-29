@@ -31,7 +31,9 @@ namespace PRS_serverside.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Request>> GetRequest(int id)
         {
-            var request = await _context.Requests.FindAsync(id);
+            var request = await _context.Requests
+                                        .Include(x => x.RequestLines)
+                                        .SingleOrDefaultAsync(x => x.Id == id);
 
             if (request == null)
             {
