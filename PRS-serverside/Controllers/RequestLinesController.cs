@@ -23,6 +23,10 @@ namespace PRS_serverside.Controllers
         private async Task<IActionResult> RecalculateRequestTotal(int requestId)
         {
             var req = await _context.Requests.FindAsync(requestId);
+            if (req == null)
+            {
+                throw new Exception("RecalculationRequest received invalid requestId");
+            }
             req.Total = (from rl in _context.RequestLines
                          join p in _context.Products
                          on rl.ProductId equals p.Id

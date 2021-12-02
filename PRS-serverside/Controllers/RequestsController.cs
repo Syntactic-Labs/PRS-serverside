@@ -24,7 +24,9 @@ namespace PRS_serverside.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Request>>> GetRequests()
         {
-            return await _context.Requests.ToListAsync();
+            return await _context.Requests
+                                        .Include(x => x.User)
+                                        .ToListAsync();
         }
 
         // GET: api/Requests/5
@@ -32,7 +34,9 @@ namespace PRS_serverside.Controllers
         public async Task<ActionResult<Request>> GetRequest(int id)
         {
             var request = await _context.Requests
+                                        .Include(x => x.User)
                                         .Include(x => x.RequestLines)
+                                        .ThenInclude(x => x.Product)
                                         .SingleOrDefaultAsync(x => x.Id == id);
 
             if (request == null)
