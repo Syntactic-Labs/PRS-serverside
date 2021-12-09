@@ -234,7 +234,7 @@ namespace PRS_serverside.Migrations
             modelBuilder.Entity("PRS_serverside.Models.Product", b =>
                 {
                     b.HasOne("PRS_serverside.Models.Vendor", "Vendor")
-                        .WithMany()
+                        .WithMany("Products")
                         .HasForeignKey("VendorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -245,7 +245,7 @@ namespace PRS_serverside.Migrations
             modelBuilder.Entity("PRS_serverside.Models.Request", b =>
                 {
                     b.HasOne("PRS_serverside.Models.User", "User")
-                        .WithMany()
+                        .WithMany("Requests")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -256,7 +256,7 @@ namespace PRS_serverside.Migrations
             modelBuilder.Entity("PRS_serverside.Models.RequestLine", b =>
                 {
                     b.HasOne("PRS_serverside.Models.Product", "Product")
-                        .WithMany()
+                        .WithMany("RequestLines")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -272,9 +272,24 @@ namespace PRS_serverside.Migrations
                     b.Navigation("Request");
                 });
 
+            modelBuilder.Entity("PRS_serverside.Models.Product", b =>
+                {
+                    b.Navigation("RequestLines");
+                });
+
             modelBuilder.Entity("PRS_serverside.Models.Request", b =>
                 {
                     b.Navigation("RequestLines");
+                });
+
+            modelBuilder.Entity("PRS_serverside.Models.User", b =>
+                {
+                    b.Navigation("Requests");
+                });
+
+            modelBuilder.Entity("PRS_serverside.Models.Vendor", b =>
+                {
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }
