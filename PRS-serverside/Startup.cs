@@ -54,7 +54,7 @@ namespace PRS_serverside
             app.UseCors(s => s.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
             app.UseRouting();
-
+            
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
